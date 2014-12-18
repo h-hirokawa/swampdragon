@@ -1,3 +1,4 @@
+import json
 from ..model_tools import string_to_list, get_property
 from .channel_filters import filter_options, in_compare, term_match_check
 
@@ -13,7 +14,9 @@ def make_safe(val):
     Make strings in filters save.
     i.e 'foo bar' becomes 'foo+bar'
     """
-    if not isinstance(val, str):
+    if isinstance(val, list):
+        return json.dumps(val)
+    elif not isinstance(val, str):
         return val
     return quote_plus(val)
 

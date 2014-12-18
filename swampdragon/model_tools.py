@@ -1,3 +1,4 @@
+import json
 from django.db.models.loading import get_model as get_django_model
 
 
@@ -21,7 +22,10 @@ def get_property(obj, field):
 
 
 def string_to_list(val):
-    return val.replace('[', '').replace(']', '').split(',')
+    try:
+        return json.loads(val)
+    except Exception:
+        return val.replace('[', '').replace(']', '').split(',')
 
 
 def get_model(model):
