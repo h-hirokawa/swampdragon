@@ -185,7 +185,7 @@ class ModelSerializer(object):
 
         # Set all the ids for related models
         # so the datamapper can find the connection
-        data.update(get_id_mappings(self))
+        # data.update(get_id_mappings(self))
 
         # Set the id value for related models, for the data mapper
         # if ignore_serializers:
@@ -206,7 +206,6 @@ class ModelSerializer(object):
                 data[name] = custom_function(self.instance, serializer)
             else:
                 data[name] = custom_function(self.instance)
-
         return data
 
     def _serialize_value(self, attr_name, ignore_serializers=None):
