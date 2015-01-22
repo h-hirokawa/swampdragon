@@ -27,23 +27,37 @@ def in_compare(term, val):
     return val in [type(val)(t) for t in term]
 
 
+def prepare_compare(term, val):
+    from datetime import datetime
+    from dateutil import parser
+
+    if isinstance(val, datetime):
+        try:
+            term = parser.parse(term)
+        except:
+            term = val
+    else:
+        term = type(val)(term)
+    return term, val
+
+
 def lt_compare(term, val):
-    term = type(val)(term)
+    term, val = prepare_compare(term, val)
     return val < term
 
 
 def lte_compare(term, val):
-    term = type(val)(term)
+    term, val = prepare_compare(term, val)
     return val <= term
 
 
 def gt_compare(term, val):
-    term = type(val)(term)
+    term, val = prepare_compare(term, val)
     return val > term
 
 
 def gte_compare(term, val):
-    term = type(val)(term)
+    term, val = prepare_compare(term, val)
     return val >= term
 
 
