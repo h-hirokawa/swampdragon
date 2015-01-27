@@ -169,9 +169,16 @@ class ModelSerializer(object):
         ) for f in dir(self) if f.startswith('serialize_')]
         return functions
 
+    def get_id_field(self):
+        splitted_id_field = self.opts.id_field.split('.')
+        attr = self.instance
+        for f in splitted_id_field:
+            attr = getattr(attr, f)
+        return attr
+
     def get_object_map_data(self):
         return {
-            'id': getattr(self.instance, self.opts.id_field),
+            'id': self.get_id_field(),
             '_type': self.opts.model._meta.model_name
         }
 
